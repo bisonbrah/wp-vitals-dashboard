@@ -1,6 +1,7 @@
 # wp-vitals-dashboard
 
-A Django application that runs AI-powered WordPress site health audits, stores results in Postgres, and generates a diff report between runs showing what's been resolved, what's new, and what remains.
+A Django application that runs AI-powered WordPress site health audits, stores results in Postgres, and generates a diff
+report between runs showing what's been resolved, what's new, and what remains.
 
 Built as the persistence and history layer on top of [wp-vitals](https://github.com/bisonbrah/wp-vitals).
 
@@ -12,9 +13,11 @@ Point it at any local WordPress install and it runs a full audit across three di
 
 - **Error logs** — surfaces critical issues, fatal errors, and deprecation patterns
 - **Plugins** — flags outdated plugins, major version jumps, inactive installs, and auto-update gaps
-- **Theme dependencies** — detects the theme framework, recommends the correct Node version, and identifies safe vs. unsafe npm updates
+- **Theme dependencies** — detects the theme framework, recommends the correct Node version, and identifies safe vs.
+  unsafe npm updates
 
-Results are stored in Postgres. On subsequent runs it compares the new report to the previous one and generates an AI diff — telling you exactly what got fixed, what's new, and what's still open.
+Results are stored in Postgres. On subsequent runs it compares the new report to the previous one and generates an AI
+diff — telling you exactly what got fixed, what's new, and what's still open.
 
 ---
 
@@ -35,19 +38,16 @@ python manage.py run_audit my-client-site --theme my-theme
 
 ## Screenshots
 
-### Admin dashboard — Sites and Reports
-![Admin home](screenshots/admin-home.png)
+### Dashboard — all audited sites with health status
 
-### Sites list — tracked installs
-![Sites list](screenshots/sites-list.png)
+![Dashboard](screenshots/dashboard.png)
 
-### Reports list — filterable by health status and site
-![Reports list](screenshots/reports-list.png)
+### Report detail — full audit output with AI diff
 
-### Full report detail — all audit outputs plus AI diff
 ![Report detail](screenshots/report-detail.png)
 
 The diff section compares the current run to the previous one:
+
 - **Resolved** — issues from the last run that are no longer present
 - **New Issues** — issues that weren't in the previous report
 - **Unchanged** — issues that persist between runs
@@ -59,6 +59,7 @@ The diff section compares the current run to the previous one:
 
 - **Django 6** — web framework and ORM
 - **PostgreSQL** — persistent storage for sites and report history
+- **Tailwind CSS** — frontend styling via CDN
 - **Anthropic Claude Haiku** — audit analysis and diff generation
 - **wp-vitals** — the underlying audit engine (log analyzer, plugin auditor, theme dependency auditor)
 
@@ -126,7 +127,8 @@ The diff section compares the current run to the previous one:
    python manage.py runserver
    ```
 
-9. Visit `http://127.0.0.1:8000/admin`
+9. Visit `http://127.0.0.1:8000` for the dashboard
+   Visit `http://127.0.0.1:8000/admin` for the Django admin
 
 ---
 

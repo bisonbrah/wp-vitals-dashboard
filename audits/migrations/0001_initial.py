@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -29,13 +28,16 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('overall_health', models.CharField(choices=[('critical', 'Critical'), ('warning', 'Warning'), ('healthy', 'Healthy'), ('unknown', 'Unknown')], default='unknown', max_length=20)),
+                ('overall_health', models.CharField(
+                    choices=[('critical', 'Critical'), ('warning', 'Warning'), ('healthy', 'Healthy'),
+                             ('unknown', 'Unknown')], default='unknown', max_length=20)),
                 ('log_report', models.TextField(blank=True)),
                 ('plugin_report', models.TextField(blank=True)),
                 ('theme_report', models.TextField(blank=True)),
                 ('executive_summary', models.TextField(blank=True)),
                 ('debug_prompts', models.TextField(blank=True)),
-                ('site', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reports', to='audits.site')),
+                ('site', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reports',
+                                           to='audits.site')),
             ],
             options={
                 'ordering': ['-created_at'],

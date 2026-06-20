@@ -1,0 +1,49 @@
+{% extends "audits/base.html" %}
+
+{% block title %}{{ site.name }} — WP Vitals{% endblock %}
+
+{% block content %}
+
+    <div class="mb-8">
+        <a href="{% url 'dashboard' %}" class="text-gray-500 text-sm hover:text-gray-300 transition-colors">← All
+            sites</a>
+        <h1 class="text-2xl font-semibold text-white mt-3">{{ site.name }}</h1>
+        <p class="text-gray-500 text-sm mt-1">{{ reports.count }} audit run{{ reports.count|pluralize }}</p>
+    </div>
+
+    {% if reports %}
+        <div class="space-y-3">
+            {% for report in reports %}
+                <a href="{% url 'report_detail' report.id %}"
+                   class="block bg-gray-900 border border-gray-800 rounded-lg px-5 py-4 hover:border-gray-600 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-white text-sm">{{ report.created_at|date:"M j, Y" }}</span>
+                            <span class="text-gray-500 text-xs ml-2">{{ report.created_at|date:"g:i A" }}</span>
+                            {% if report.diff_report %}
+                                <span class="text-blue-400 text-xs ml-3">diff available</span>
+                            {% endif %}
+                        </div>
+
+                        {% if report.overall_health == 'critical' %}
+                            <span class="bg-red-900 text-red-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">Critical</span>
+                        {% elif report.overall_health == 'warning' %}
+                            <span class="bg-yellow-900 text-yellow-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">Warning</span>
+                        {% elif report.overall_health == 'healthy' %}
+                            <span class="bg-green-900 text-green-300 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">Healthy</span>
+                        {% else %}
+                            <span class="bg-gray-800 text-gray-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">Unknown</span>
+                        {% endif %}
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="bg-gray-900 border border-gray-800 rounded-lg px-6 py-12 text-center">
+            <p class="text-gray-400">No reports yet for this site.</p>
+            <code class="block mt-4 text-green-400 text-sm">python manage.py run_audit {{ site.name }}</code>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "audits/base.html" %}
+
+{% block title %}Report — {{ report.site.name }} — WP Vitals{% endblock %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="mb-8">
+        <a href="{% url 'site_detail' report.site.name %}"
+           class="text-gray-500 text-sm hover:text-gray-300 transition-colors">← {{ report.site.name }}</a>
+        <div class="flex items-center justify-between mt-3">
+            <div>
+                <h1 class="text-2xl font-semibold text-white">Audit Report</h1>
+                <p class="text-gray-500 text-sm mt-1">{{ report.created_at|date:"F j, Y g:i A" }}</p>
+            </div>
+
+            {% if report.overall_health == 'critical' %}
+                <span class="bg-red-900 text-red-300 text-sm font-semibold px-4 py-2 rounded-full uppercase tracking-wide">Critical</span>
+            {% elif report.overall_health == 'warning' %}
+                <span class="bg-yellow-900 text-yellow-300 text-sm font-semibold px-4 py-2 rounded-full uppercase tracking-wide">Warning</span>
+            {% elif report.overall_health == 'healthy' %}
+                <span class="bg-green-900 text-green-300 text-sm font-semibold px-4 py-2 rounded-full uppercase tracking-wide">Healthy</span>
+            {% else %}
+                <span class="bg-gray-800 text-gray-400 text-sm font-semibold px-4 py-2 rounded-full uppercase tracking-wide">Unknown</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Diff — show first if available, it's the most important thing on a repeat run -->
+    {% if report.diff_report %}
+        <div class="mb-6">
+            <div class="bg-blue-950 border border-blue-800 rounded-lg p-5">
+                <h2 class="text-blue-300 text-xs font-semibold uppercase tracking-widest mb-3">Changes Since Last
+                    Run</h2>
+                <pre class="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap">{{ report.diff_report }}</pre>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Executive Summary -->
+    {% if report.executive_summary %}
+        <div class="mb-6">
+            <div class="bg-gray-900 border border-gray-800 rounded-lg p-5">
+                <h2 class="text-gray-400 text-xs font-semibold uppercase tracking-widest mb-3">Executive Summary</h2>
+                <pre class="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap">{{ report.executive_summary }}</pre>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Individual Audit Sections -->
+    <div class="space-y-4">
+
+        {% if report.log_report %}
+            <div class="bg-gray-900 border border-gray-800 rounded-lg p-5">
+                <h2 class="text-gray-400 text-xs font-semibold uppercase tracking-widest mb-3">Error Logs</h2>
+                <pre class="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap">{{ report.log_report }}</pre>
+            </div>
+        {% endif %}
+
+        {% if report.plugin_report %}
+            <div class="bg-gray-900 border border-gray-800 rounded-lg p-5">
+                <h2 class="text-gray-400 text-xs font-semibold uppercase tracking-widest mb-3">Plugins</h2>
+                <pre class="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap">{{ report.plugin_report }}</pre>
+            </div>
+        {% endif %}
+
+        {% if report.theme_report %}
+            <div class="bg-gray-900 border border-gray-800 rounded-lg p-5">
+                <h2 class="text-gray-400 text-xs font-semibold uppercase tracking-widest mb-3">Theme Dependencies</h2>
+                <pre class="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap">{{ report.theme_report }}</pre>
+            </div>
+        {% endif %}
+
+        {% if report.debug_prompts %}
+            <div class="bg-gray-900 border border-gray-800 rounded-lg p-5">
+                <h2 class="text-gray-400 text-xs font-semibold uppercase tracking-widest mb-3">Debug Prompts</h2>
+                <pre class="text-gray-300 text-xs leading-relaxed whitespace-pre-wrap">{{ report.debug_prompts }}</pre>
+            </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}
