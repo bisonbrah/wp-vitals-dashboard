@@ -40,11 +40,15 @@ python manage.py run_audit my-client-site --theme my-theme
 
 ### Dashboard — all audited sites with health status
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/frontend-dashboard.png)
+
+### Site detail — full audit history with diff indicators
+
+![Site detail](screenshots/frontend-site-view.png)
 
 ### Report detail — full audit output with AI diff
 
-![Report detail](screenshots/report-detail.png)
+![Report detail](screenshots/frontend-audit.png)
 
 The diff section compares the current run to the previous one:
 
