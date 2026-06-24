@@ -108,30 +108,26 @@ The diff section compares the current run to the previous one:
    DB_HOST=localhost
    DB_PORT=5432
    ANTHROPIC_API_KEY=your-api-key
+   WP_VITALS_PATH=/path/to/your/wp-vitals
    ```
 
-5. Update the wp-vitals path in `dashboard/settings.py`:
-   ```python
-   sys.path.insert(0, '/path/to/your/wp-vitals')
-   ```
-
-6. Create the database and run migrations:
+5. Create the database and run migrations:
    ```bash
    createdb wp_vitals
    python manage.py migrate
    ```
 
-7. Create a superuser for the admin:
+6. Create a superuser for the admin:
    ```bash
    python manage.py createsuperuser
    ```
 
-8. Start the server:
+7. Start the server:
    ```bash
    python manage.py runserver
    ```
 
-9. Visit `http://127.0.0.1:8000` for the dashboard
+8. Visit `http://127.0.0.1:8000` for the dashboard
    Visit `http://127.0.0.1:8000/admin` for the Django admin
 
 ---
@@ -156,6 +152,6 @@ The site folder name must match the folder name under your `LOCAL_SITES_PATH` (c
 ## Notes
 
 - `.env` is gitignored -- never commit secrets
-- The wp-vitals path in `settings.py` is hardcoded to your local machine -- update it after cloning
+- `WP_VITALS_PATH` must point to your local wp-vitals clone -- set it in `.env`, never in code
 - Designed for Local by Flywheel installs; plugin audits require the target site to be running
 - API costs per full audit run are a few cents using Claude Haiku

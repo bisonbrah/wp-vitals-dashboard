@@ -11,7 +11,9 @@ import sys
 load_dotenv()
 
 # Expose wp-vitals scripts to Django's import system
-sys.path.insert(0, '/Users/bisonbrah/PycharmProjects/wp-vitals')
+wp_vitals_path = os.environ.get('WP_VITALS_PATH')
+if wp_vitals_path:
+    sys.path.insert(0, wp_vitals_path)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
